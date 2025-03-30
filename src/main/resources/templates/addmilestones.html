@@ -24,8 +24,18 @@
             </div>
         </form>
         <p th:if="${goal.milestones.size() > 0}" class="form-text">Added milestones:</p>
-        <ul th:if="${goal.milestones}" th:each="milestone, iterStat : ${goal.milestones}" class="list-group">
-            <li th:text="${iterStat.index+1} + '. ' + ${milestone.title}" class="list-group-item"></li>
+        <ul th:if="${goal.milestones}" class="list-group">
+            <li th:each="milestone, iterStat : ${goal.milestones}" class="list-group-item">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-8" th:text="${iterStat.index+1} + '. ' + ${milestone.title}"></div>
+                        <div class="col-4 text-end">
+                            <a th:href="@{/deletemilestone/{id}/fromgoal/{goalId} (id=${milestone.id}, goalId=${goal.goalId})}"
+                                class="btn btn-sm btn-primary">Remove</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
         </ul>
 
         <div class="text-center my-4">

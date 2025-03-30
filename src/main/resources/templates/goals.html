@@ -13,6 +13,8 @@
 
 <body>
     <h1>Goals</h1>
+    <p th:if="${goals.size() == 0}" class="form-text">You don't have goals yet.</p>
+
     <div class="text-center">
         <a href="/addgoal" class="btn btn-primary">Add new goal</a>
     </div>
@@ -62,17 +64,27 @@
                                             <div th:text="${milestone.title}"></div>
                                         </div>
 
-                                        <div class="col-3 text-center">
+                                        <div class="col-3 button-row d-flex justify-content-end">
+                                            <!-- Mark milestone as complete -->
                                             <form th:action="@{/milestones/{id}/complete(id=${milestone.id})}" method="post">
                                                 <button type="submit" class="btn btn-sm btn-secondary" th:disabled="${milestone.status.name() == 'COMPLETE'}">Complete</button>
                                             </form>
+
+                                            <!-- Delete milestone -->
+                                            <a th:href="@{/deletemilestone/{id}(id=${milestone.id})}" class="btn btn-sm btn-danger">Delete</a>
                                         </div>
+
 
                                     </div>
                                 </div>
                             </li>
                         </ul>
                         <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
+
+                        <div class="button-row my-4">
+                                <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
+                                <button class="btn btn-sm btn-success">Edit goal</button>
+                        </div>
                     </div>
                 </div>
             </div>

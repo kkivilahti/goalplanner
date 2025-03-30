@@ -5,11 +5,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import hh.backend.goalplanner.domain.Goal;
 import hh.backend.goalplanner.domain.GoalRepository;
 import hh.backend.goalplanner.domain.Status;
+
 
 @Controller
 public class GoalController {
@@ -41,4 +43,11 @@ public class GoalController {
         grepository.save(goal);
         return "redirect:/addmilestone/" + goal.getGoalId();
     }
+
+    @GetMapping("/deletegoal/{id}")
+    public String deleteGoal(@PathVariable("id") Long goalId, Model model) {
+        grepository.deleteById(goalId);
+        return "redirect:/goals";
+    }
+    
 }

@@ -48,6 +48,18 @@ public class MilestoneController {
         return "redirect:/addmilestone/" + goalId;
     }
 
+    @GetMapping("/deletemilestone/{id}")
+    public String deleteMilestone(@PathVariable("id") Long id, Model model) {
+        mrepository.deleteById(id);
+        return "redirect:/goals";
+    }
+
+    @GetMapping("/deletemilestone/{id}/fromgoal/{goalId}")
+    public String deleteMilestoneInAddForm(@PathVariable("id") Long id, @PathVariable("goalId") Long goalId, Model model) {
+        mrepository.deleteById(id);
+        return "redirect:/addmilestone/" + goalId;
+    }
+
     // User can mark milestones as complete
     // Helps with visual tracking: milestone indicators update their color based on milestone status
     @PostMapping("/milestones/{id}/complete")
