@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/custom.css" rel="stylesheet" />
+    <title>Add Milestones</title>
+</head>
+
+<body>
+    <h1>Add milestones</h1>
+    <p class="form-text mb-4">First add all milestones you want, then click 'Done'</p>
+
+    <div class="container" style="max-width: 400px;">
+        <form th:action="@{/savemilestone}" method="post">
+            <input type="hidden" name="goalId" th:value="${goal.goalId}" />
+            <label for="milestone" class="form-label">Milestone title</label>
+            <input type="text" class="form-control" name="title" th:value="${milestone.title}" placeholder="Title" />
+
+            <div class="text-center my-4">
+                <button type="submit" class="btn btn-primary">Add milestone</button>
+            </div>
+        </form>
+        <p th:if="${goal.milestones.size() > 0}" class="form-text">Added milestones:</p>
+        <ul th:if="${goal.milestones}" th:each="milestone, iterStat : ${goal.milestones}" class="list-group">
+            <li th:text="${iterStat.index+1} + '. ' + ${milestone.title}" class="list-group-item"></li>
+        </ul>
+
+        <div class="text-center my-4">
+            <a href="/goals" class="btn btn-primary">Done</a>
+        </div>
+    </div>
+
+</body>
+
+</html>
