@@ -13,7 +13,7 @@
     <h1>Add milestones</h1>
     <p class="form-text mb-4">First add all milestones you want, then click 'Done'</p>
 
-    <div class="container" style="max-width: 400px;">
+    <div class="container" style="width: 400px">
         <form th:action="@{/savemilestone}" method="post">
             <input type="hidden" name="goalId" th:value="${goal.goalId}" />
             <label for="milestone" class="form-label">Milestone title</label>
@@ -23,15 +23,17 @@
                 <button type="submit" class="btn btn-primary">Add milestone</button>
             </div>
         </form>
+    </div>
+
+    <div class="container" style="width: 600px">
         <p th:if="${goal.milestones.size() > 0}" class="form-text">Added milestones:</p>
         <ul th:if="${goal.milestones}" class="list-group">
             <li th:each="milestone, iterStat : ${goal.milestones}" class="list-group-item">
                 <div class="container">
-                    <div class="row">
+                    <div class="row d-flex align-items-center">
                         <div class="col-8" th:text="${iterStat.index+1} + '. ' + ${milestone.title}"></div>
                         <div class="col-4 text-end">
-                            <a th:href="@{/deletemilestone/{id}/fromgoal/{goalId} (id=${milestone.id}, goalId=${goal.goalId})}"
-                                class="btn btn-sm btn-primary">Remove</a>
+                            <a th:href="@{/deletemilestone/{id}/fromgoal/{goalId} (id=${milestone.id}, goalId=${goal.goalId})}" class="btn btn-sm btn-primary">Remove</a>
                         </div>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
     <p th:if="${goals.size() == 0}" class="form-text">You don't have goals yet.</p>
 
     <div class="text-center">
-        <a href="/addgoal" class="btn btn-primary">Add new goal</a>
+        <a href="/addgoal" class="btn btn-primary mb-4">Add new goal</a>
     </div>
 
     <div class="container-fluid">
@@ -31,9 +31,9 @@
                 </div>
 
                 <div th:id="'collapse' + ${iterStat.index}" class="collapse">
-                    <div class="accordion-body m-4">
+                    <div class="accordion-body">
 
-                        <i><p th:text="${goal.description}"></p></i>
+                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
 
                         <div class="row goal-dates">
                             <div class="col-4">
@@ -73,7 +73,6 @@
                                             <!-- Delete milestone -->
                                             <a th:href="@{/deletemilestone/{id}(id=${milestone.id})}" class="btn btn-sm btn-danger">Delete</a>
                                         </div>
-
 
                                     </div>
                                 </div>
