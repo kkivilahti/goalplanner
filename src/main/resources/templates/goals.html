@@ -12,8 +12,8 @@
 </head>
 
 <body>
-    <h1>Goals</h1>
-    <p th:if="${goals.size() == 0}" class="form-text">You don't have goals yet.</p>
+    <h1>Active goals</h1>
+    <p th:if="${goals.size() == 0}" class="form-text">You don't seem to have goals yet.</p>
 
     <div class="text-center">
         <a href="/addgoal" class="btn btn-primary mb-4">Add new goal</a>
@@ -37,10 +37,10 @@
 
                         <div class="row goal-dates">
                             <div class="col-4">
-                                <p th:text="'Started: ' + ${goal.startDate}"></p>
+                                <p th:text="'Started: ' + ${#temporals.format(goal.startDate, 'dd/MM/yyyy')}"></p>
                             </div>
                             <div class="col-4">
-                                <p th:text="'Deadline: ' + ${goal.deadline}"></p>
+                                <p th:text="'Deadline: ' + ${#temporals.format(goal.deadline, 'dd/MM/yyyy')}"></p>
                             </div>
                             <div class="col-4">
                                 <p th:text="'Days left: ' + ${goal.daysLeft}"></p>
@@ -82,7 +82,13 @@
 
                         <div class="button-row my-4">
                                 <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
-                                <button class="btn btn-sm btn-success">Edit goal</button>
+                                <a th:href="@{/editgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-success">Edit goal</a>
+                        </div>
+                        <div th:if="${goal.progress == 100}" class="text-center mb-4">
+                            <p>Wow! You completed all the milestones. Is the goal complete?</p>
+                            <form th:action="@{/goals/{id}/complete(id=${goal.goalId})}" method="post">
+                                <button type="submit" class="btn btn-sm btn-secondary">Mark goal as complete</button>
+                            </form>
                         </div>
                     </div>
                 </div>

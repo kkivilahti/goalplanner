@@ -27,6 +27,7 @@ public class Goal {
     private String description;
     private LocalDate startDate;
     private LocalDate deadline;
+    private LocalDate completionDate;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -101,10 +102,20 @@ public class Goal {
         this.milestones = milestones;
     }
 
+    public LocalDate getCompletionDate() {
+        return completionDate;
+    }
+
+    public void setCompletionDate(LocalDate completionDate) {
+        this.completionDate = completionDate;
+    }
+
     // Count days left to display on website
     public long daysLeft() {
         LocalDate currentDate = LocalDate.now();
-        return ChronoUnit.DAYS.between(currentDate, this.deadline);
+        long days = ChronoUnit.DAYS.between(currentDate, this.deadline);
+
+        return days;
     }
 
     // Count progress% to display on website
@@ -120,7 +131,9 @@ public class Goal {
             }
         }
 
-        return (int) Math.round((completed / milestones.size()) * 100);
+        int progress = (int) Math.round((completed / milestones.size()) * 100);
+
+        return progress;
     }
 
     @Override

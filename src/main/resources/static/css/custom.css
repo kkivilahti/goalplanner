@@ -32,6 +32,15 @@ h1 {
     text-align: center;
 }
 
+th {
+    font-weight: normal;
+}
+
+table {
+    width: 100%;
+    max-width: 400px;
+}
+
 .status-badge {
     display: flex;
     justify-content: center;

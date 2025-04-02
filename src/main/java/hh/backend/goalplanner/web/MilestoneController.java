@@ -63,7 +63,7 @@ public class MilestoneController {
     // User can mark milestones as complete
     // Helps with visual tracking: milestone indicators update their color based on milestone status
     @PostMapping("/milestones/{id}/complete")
-    public String markAsComplete(@PathVariable Long id) {
+    public String markAsComplete(@PathVariable("id") Long id) {
         Optional<Milestone> optmilestone = mrepository.findById(id);
 
         // Check if milestone object exists. Then change the status and save it
