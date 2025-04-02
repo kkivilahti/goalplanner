@@ -103,7 +103,7 @@ public class GoalController {
             grepository.save(goal);
         }
 
-        return "redirect:/goals";
+        return "redirect:/pastgoals";
     }
 
 }
