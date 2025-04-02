@@ -12,8 +12,45 @@
 </head>
 
 <body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-md">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">Goalplanner</a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/goals">Active goals</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="/pastgoals">Past goals</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/addgoal">Add goal</a>
+                        </li>
+                    </ul>
+    
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Sign in (coming later)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
     <h1>Past goals</h1>
-    <p th:if="${completeGoals != null && completeGoals.size() == 0 && pastGoals != null && pastGoals.size() == 0}" class="form-text">You don't seem to have past goals yet.</p>
+    <p th:if="${completeGoals != null && completeGoals.size() == 0 && pastGoals != null && pastGoals.size() == 0}" class="form-text">
+        No goals here yet. Complete goals to fill this page up!
+    </p>
 
     <div class="container-fluid">
 
@@ -23,7 +60,9 @@
             <!-- Iterates through all goals and displays them as accordion items -->
             <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${completeGoals}">
                 <div class="accordion-header">
-                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
+                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="'#collapse' + ${iterStat.index}"
+                        th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
                         <h5 th:text="${goal.title}"></h5>
                     </button>
                 </div>
@@ -31,7 +70,9 @@
                 <div th:id="'collapse' + ${iterStat.index}" class="collapse">
                     <div class="accordion-body">
 
-                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
+                        <i>
+                            <p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p>
+                        </i>
 
                         <div class="row goal-dates">
                             <div class="col-4">
@@ -41,7 +82,8 @@
                                 <p th:text="'Deadline: ' + ${#temporals.format(goal.deadline, 'dd/MM/yyyy')}"></p>
                             </div>
                             <div class="col-4" th:if="${goal.completionDate != null}">
-                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}"></p>
+                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}">
+                                </p>
                             </div>
                         </div>
 
@@ -53,8 +95,11 @@
 
                                         <div class="col-1">
                                             <!-- Status indicator -->
-                                            <span class="status-badge" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'" alt="status-indicator">
-                                                <i class="bi" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
+                                            <span class="status-badge"
+                                                th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'"
+                                                alt="status-indicator">
+                                                <i class="bi"
+                                                    th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
                                             </span>
                                         </div>
 
@@ -69,7 +114,8 @@
                         <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
 
                         <div class="button-row my-4">
-                                <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
+                            <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete
+                                goal</a>
                         </div>
                     </div>
                 </div>
@@ -83,7 +129,9 @@
             <!-- Iterates through all goals and displays them as accordion items -->
             <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${pastGoals}">
                 <div class="accordion-header">
-                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
+                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse"
+                        th:data-bs-target="'#collapse' + ${iterStat.index}"
+                        th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
                         <h5 th:text="${goal.title}"></h5>
                     </button>
                 </div>
@@ -91,7 +139,9 @@
                 <div th:id="'collapse' + ${iterStat.index}" class="collapse">
                     <div class="accordion-body">
 
-                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
+                        <i>
+                            <p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p>
+                        </i>
 
                         <div class="row goal-dates">
                             <div class="col-4">
@@ -101,7 +151,8 @@
                                 <p th:text="'Deadline: ' + ${#temporals.format(goal.deadline, 'dd/MM/yyyy')}"></p>
                             </div>
                             <div class="col-4" th:if="${goal.completionDate != null}">
-                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}"></p>
+                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}">
+                                </p>
                             </div>
                         </div>
 
@@ -113,8 +164,11 @@
 
                                         <div class="col-1">
                                             <!-- Status indicator -->
-                                            <span class="status-badge" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'" alt="status-indicator">
-                                                <i class="bi" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
+                                            <span class="status-badge"
+                                                th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'"
+                                                alt="status-indicator">
+                                                <i class="bi"
+                                                    th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
                                             </span>
                                         </div>
 
@@ -129,7 +183,8 @@
                         <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
 
                         <div class="button-row my-4">
-                                <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
+                            <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete
+                                goal</a>
                         </div>
                     </div>
                 </div>
