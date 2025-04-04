@@ -15,6 +15,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Goal {
@@ -23,10 +27,19 @@ public class Goal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long goalId;
 
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @NotBlank(message = "Description is required")
     private String description;
+
+    @NotNull(message = "Start date is required")
     private LocalDate startDate;
+
+    @Future(message = "Deadline must be in the future")
+    @NotNull(message = "Deadline is required")
     private LocalDate deadline;
+
     private LocalDate completionDate;
 
     @Enumerated(EnumType.STRING)
@@ -34,6 +47,7 @@ public class Goal {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy="goal")
     @JsonIgnoreProperties("goal")
+    @Valid
     private List<Milestone> milestones = new ArrayList<>();
 
     public Goal(String title, String description, LocalDate startDate, LocalDate deadline, Status status) {

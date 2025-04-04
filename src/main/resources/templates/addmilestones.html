@@ -46,14 +46,17 @@
     </div>
 
     <h1>Add milestones</h1>
-    <p class="form-text mb-4">First add all milestones you want, then click 'Done'</p>
 
     <div class="container" style="width: 400px">
-        <form th:action="@{/savemilestone}" method="post">
+        <form th:action="@{/savemilestone}" method="post" th:object="${milestone}">
             <input type="hidden" name="goalId" th:value="${goal.goalId}" />
+    
             <label for="milestone" class="form-label">Milestone title</label>
-            <input type="text" class="form-control" name="title" th:value="${milestone.title}" placeholder="Title" />
-
+            <input type="text" class="form-control" name="title" th:field="*{title}" placeholder="Title" />
+            
+            <!-- Error message display for the title field -->
+            <p th:if="${#fields.hasErrors('title')}" th:classappend="error" th:errors="*{title}"></p>
+            
             <div class="text-center my-4">
                 <button type="submit" class="btn btn-primary">Add milestone</button>
             </div>
@@ -61,7 +64,7 @@
     </div>
 
     <div class="container" style="width: 600px">
-        <p th:if="${goal.milestones.size() > 0}" class="form-text">Added milestones:</p>
+        <p th:if="${goal.milestones.size() > 0}" class="form-text mt-5">Added milestones:</p>
         <ul th:if="${goal.milestones}" class="list-group">
             <li th:each="milestone, iterStat : ${goal.milestones}" class="list-group-item">
                 <div class="container">
@@ -75,9 +78,11 @@
             </li>
         </ul>
 
-        <div class="text-center my-4">
-            <a href="/goals" class="btn btn-primary">Done</a>
+        <div th:if="${milestoneEmpty != null and !milestoneEmpty}" class="text-center mt-5">
+            <p class="form-text mb-3">After adding all milestones you want, click here:</p>
+            <a th:href="@{/goals}" class="btn btn-primary">Done</a>
         </div>
+
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>

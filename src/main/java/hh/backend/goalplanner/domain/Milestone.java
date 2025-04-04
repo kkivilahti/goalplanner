@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Milestone {
@@ -16,6 +17,7 @@ public class Milestone {
     @GeneratedValue(strategy = (GenerationType.AUTO))
     private Long id;
 
+    @NotBlank(message = "Milestone title is required")
     private String title;
 
     @Enumerated(EnumType.STRING)

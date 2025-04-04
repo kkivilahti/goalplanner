@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,6 +17,7 @@ import hh.backend.goalplanner.domain.GoalRepository;
 import hh.backend.goalplanner.domain.Milestone;
 import hh.backend.goalplanner.domain.MilestoneRepository;
 import hh.backend.goalplanner.domain.Status;
+import jakarta.validation.Valid;
 
 @Controller
 public class MilestoneController {
@@ -29,22 +32,38 @@ public class MilestoneController {
     @GetMapping("/addmilestone/{goalId}")
     public String addMilestone(@PathVariable Long goalId, Model model) {
         Optional<Goal> goal = grepository.findById(goalId);
-        Milestone milestone = new Milestone();
-        model.addAttribute("goal", goal.get());
-        model.addAttribute("milestone", milestone);
+
+        if (goal.isPresent()) {
+            Milestone milestone = new Milestone();
+            model.addAttribute("goal", goal.get());
+            model.addAttribute("milestone", milestone);
+
+            boolean milestoneEmpty = goal.get().getMilestones().isEmpty();
+            model.addAttribute("milestoneEmpty", milestoneEmpty);
+        } else {
+            // If goal doesn't exist
+            return "redirect:/goals";
+        }
+
         return "addmilestones";
     }
 
-    // Save new milestone with status=pending and link it to the right goal
-    // Redirect back to /addmilestones, in case user wants to add more milestones to the goal
+    // Save new milestone and link it to the right goal
     @PostMapping("/savemilestone")
-    public String saveMilestone(@RequestParam Long goalId, @RequestParam String title) {
+    public String saveMilestone(@ModelAttribute @Valid Milestone milestone, BindingResult result, @RequestParam Long goalId, Model model) {
         Optional<Goal> goal = grepository.findById(goalId);
-        Milestone milestone = new Milestone();
-        milestone.setTitle(title);
-        milestone.setStatus(Status.PENDING);
+
+        if (result.hasErrors()) {
+            // In case of validation errors, return to the form and show the error messages
+            model.addAttribute("goal", goal.get());
+            return "addmilestones";
+        }
+
         milestone.setGoal(goal.get());
+        milestone.setStatus(Status.PENDING); // Status is 'pending' by default
         mrepository.save(milestone);
+
+        // Redirect back to /addmilestones, in case user wants to add more milestones to the goal
         return "redirect:/addmilestone/" + goalId;
     }
 
@@ -75,4 +94,5 @@ public class MilestoneController {
 
         return "redirect:/goals";
     }
+
 }

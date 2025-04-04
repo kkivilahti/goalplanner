@@ -52,15 +52,19 @@
 
             <label for="title" class="form-label">Title</label>
             <input type="text" class="form-control" id="title" th:field="*{title}" />
+            <p th:if="${#fields.hasErrors('title')}" th:classappend="error" th:errors="*{title}"></p>
 
             <label for="desc" class="form-label">Description</label>
             <input type="text" class="form-control" id="desc" th:field="*{description}" />
+            <p th:if="${#fields.hasErrors('description')}" th:classappend="error" th:errors="*{description}"></p>
 
             <label for="sdate" class="form-label">Start Date</label>
             <input type="text" class="form-control" id="sdate" th:field="*{startDate}" />
+            <p th:if="${#fields.hasErrors('startDate')}" th:classappend="error" th:errors="*{startDate}"></p>
 
             <label for="dl" class="form-label">Deadline</label>
             <input type="text" class="form-control" id="dl" th:field="*{deadline}" />
+            <p th:if="${#fields.hasErrors('deadline')}" th:classappend="error" th:errors="*{deadline}"></p>
 
             <input type="hidden" th:field="*{status}" />
 
@@ -74,7 +78,10 @@
                     <tr th:each="milestone, iterStat : *{milestones}">
                         <input type="hidden" th:field="*{milestones[__${iterStat.index}__].id}" />
                         <input type="hidden" th:field="*{milestones[__${iterStat.index}__].status}" />
-                        <td><input class="form-control mb-1" th:field="*{milestones[__${iterStat.index}__].title}" /></td>
+                        <td>
+                            <input class="form-control mb-1" th:field="*{milestones[__${iterStat.index}__].title}" />
+                            <p th:if="${#fields.hasErrors('milestones[' + iterStat.index + '].title')}" th:errors="*{milestones[__${iterStat.index}__].title}" th:classappend="error" ></p>
+                        </td>
                     </tr>
                 </tbody>
             </table>

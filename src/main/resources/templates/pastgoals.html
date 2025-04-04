@@ -54,8 +54,7 @@
             This page contains goals that have already been completed or are past their deadline.
             You can review your progress, reflect on your achievements, and see which goals were not completed on time.
         </p>
-        <p th:if="${completeGoals != null && completeGoals.size() == 0 && pastGoals != null && pastGoals.size() == 0}"
-            class="form-text">
+        <p th:if="${pastGoals != null && pastGoals.size() == 0}" class="form-text">
             Fill this page up by completing goals!
         </p>
     </div>

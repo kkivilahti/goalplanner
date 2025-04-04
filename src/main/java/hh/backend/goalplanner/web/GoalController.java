@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import hh.backend.goalplanner.domain.GoalRepository;
 import hh.backend.goalplanner.domain.Milestone;
 import hh.backend.goalplanner.domain.MilestoneRepository;
 import hh.backend.goalplanner.domain.Status;
+import jakarta.validation.Valid;
 
 @Controller
 public class GoalController {
@@ -52,12 +54,17 @@ public class GoalController {
         return "addgoal";
     }
 
-    // First, save new goal
+    // Check if goal is valid, and save the goal
     // Then redirect to /addmilestone/{id} to add milestones related to the goal
     @PostMapping("/savegoal")
-    public String saveGoal(@ModelAttribute Goal goal) {
-        grepository.save(goal);
-        return "redirect:/addmilestone/" + goal.getGoalId();
+    public String saveGoal(@Valid @ModelAttribute Goal goal, BindingResult result) {
+        if (result.hasErrors()) {
+            // In case of validation errors, return to the form and show the error messages
+            return "addgoal";
+        } else {
+            grepository.save(goal);
+            return "redirect:/addmilestone/" + goal.getGoalId();
+        }
     }
 
     // Deleting active goal redirects to goals-page
@@ -85,7 +92,12 @@ public class GoalController {
 
     // Save edited goal and redirect to the goal page
     @PostMapping("/savegoaledit")
-    public String saveEditedGoal(@ModelAttribute Goal goal) {
+    public String saveEditedGoal(@Valid @ModelAttribute Goal goal, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("goal", goal);
+            return "editgoal";
+        }
+
         grepository.save(goal);
 
         for (Milestone milestone : goal.getMilestones()) {
