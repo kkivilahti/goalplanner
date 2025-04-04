@@ -48,7 +48,7 @@
     </div>
 
     <h1>Active goals</h1>
-    <p th:if="${goals.size() == 0}" class="form-text">You don't seem to have goals yet.</p>
+    <p th:if="${activeGoals.size() == 0}" class="form-text">You don't seem to have goals yet.</p>
 
     <div class="text-center">
         <a href="/addgoal" class="btn btn-primary mb-4">Add new goal</a>
@@ -58,7 +58,7 @@
         <div class="accordion rounded-3" id="goalAccordion">
 
             <!-- Iterates through all goals and displays them as accordion items -->
-            <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${goals}">
+            <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${activeGoals}">
                 <div class="accordion-header">
                     <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
                         <h5 th:text="${goal.title}"></h5>

@@ -26,20 +26,19 @@ public class GoalController {
     @Autowired
     private MilestoneRepository mrepository;
 
-    // Show active goals on the page
+    // Show active (status=pending) goals on the page
     @GetMapping("/goals")
     public String showActiveGoals(Model model) {
-        model.addAttribute("goals", grepository.findByStatus(Status.PENDING));
+        LocalDate currentDate = LocalDate.now();
+        model.addAttribute("activeGoals", grepository.findByStatusAndDeadlineAfter(Status.PENDING, currentDate));
         return "goals";
     }
 
-    // Show past goals: goals that have status=complete or deadline in the past
+    // Show past goals: goals that have been marked as complete, or have deadline in the past
     @GetMapping("/pastgoals")
     public String showPastGoals(Model model) {
-        model.addAttribute("completeGoals", grepository.findByStatus(Status.COMPLETE));
-
         LocalDate currentDate = LocalDate.now();
-        model.addAttribute("pastGoals", grepository.findByDeadlineBefore(currentDate));
+        model.addAttribute("pastGoals", grepository.findByStatusOrDeadlineBefore(Status.COMPLETE, currentDate));
         return "pastgoals";
     }
 
@@ -61,10 +60,18 @@ public class GoalController {
         return "redirect:/addmilestone/" + goal.getGoalId();
     }
 
+    // Deleting active goal redirects to goals-page
     @GetMapping("/deletegoal/{id}")
-    public String deleteGoal(@PathVariable("id") Long goalId, Model model) {
+    public String deleteActiveGoal(@PathVariable("id") Long goalId, Model model) {
         grepository.deleteById(goalId);
         return "redirect:/goals";
+    }
+
+    // Deleting past goal redirects to pastgoals-page
+    @GetMapping("/deletepastgoal/{id}")
+    public String deletePastGoal(@PathVariable("id") Long goalId, Model model) {
+        grepository.deleteById(goalId);
+        return "redirect:/pastgoals";
     }
 
     // Create a form to edit goal

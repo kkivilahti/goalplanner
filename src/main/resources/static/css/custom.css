@@ -82,6 +82,12 @@ table {
     text-align: center;
 }
 
+.info-text {
+    font-size: 14px;
+    max-width: 50%;
+    text-align: center;
+}
+
 @media screen and (min-width: 1400px) {
     .accordion {
         width: 50%;
@@ -99,6 +105,10 @@ table {
     .accordion {
         width: 80%;
     }
+
+    .info-text {
+        max-width: 70%;
+    }
 }
 
 @media screen and (max-width: 800px) {
@@ -109,5 +119,9 @@ table {
     .list-group {
         margin-left: 5px;
         margin-right: 5px;
+    }
+
+    .info-text {
+        max-width: 90%;
     }
 }

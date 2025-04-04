@@ -8,6 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface GoalRepository extends CrudRepository<Goal, Long> {
-    List<Goal> findByStatus(Status status);
-    List<Goal> findByDeadlineBefore(LocalDate currentDate);
+    List<Goal> findByStatusAndDeadlineAfter(Status status, LocalDate currentDate);
+    List<Goal> findByStatusOrDeadlineBefore(Status status, LocalDate currentDate);
 }
