@@ -36,11 +36,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/addgoal">Add goal</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" href="/userlist">Manage users</a>
+                        </li>
                     </ul>
 
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sign in (coming later)</a>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -76,9 +81,7 @@
                 <div th:id="'collapse' + ${iterStat.index}" class="collapse">
                     <div class="accordion-body">
 
-                        <i>
-                            <p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p>
-                        </i>
+                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
 
                         <div class="row goal-dates">
                             <div class="col-4">
@@ -101,11 +104,8 @@
 
                                         <div class="col-1">
                                             <!-- Status indicator -->
-                                            <span class="status-badge"
-                                                th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'"
-                                                alt="status-indicator">
-                                                <i class="bi"
-                                                    th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
+                                            <span class="status-badge" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'" alt="status-indicator">
+                                                <i class="bi" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
                                             </span>
                                         </div>
 
@@ -120,7 +120,7 @@
                         <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
 
                         <div class="button-row my-4">
-                            <a th:href="@{/deletepastgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
+                            <a th:href="@{/deletepastgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger" onclick="return deleteGoalConfirmation()">Delete goal</a>
                         </div>
                     </div>
                 </div>

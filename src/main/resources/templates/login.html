@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/custom.css" rel="stylesheet" />
+    <title>Goalplanner</title>
+</head>
+
+<body>
+    <div class="container" style="max-width: 400px;">
+        <h1>Goalplanner</h1>
+        <h3 class="text-center">Sign in</h3>
+
+        <div class="login-error" th:if="${param.error}">
+            Invalid username or password.
+        </div>
+        <div class="logout-msg" th:if="${param.logout}">
+            You have been logged out successfully.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" />
+
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" class="form-control" />
+
+            <div class="text-center mt-3">
+                <input type="submit" value="Sign In" class="btn btn-primary" />
+            </div>
+        </form>
+        <div class="text-center mt-5">
+            <p>Don't have an account yet?</p>
+            <a th:href="@{/signup}" class="btn btn-primary">Sign Up</a>
+        </div>
+    </div>
+</body>
+
+</html>

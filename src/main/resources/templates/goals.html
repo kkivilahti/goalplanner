@@ -35,11 +35,16 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/addgoal">Add goal</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" href="/userlist">Manage users</a>
+                        </li>
                     </ul>
     
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sign in (coming later)</a>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -57,7 +62,7 @@
     <div class="container-fluid">
         <div class="accordion rounded-3" id="goalAccordion">
 
-            <!-- Iterates through all goals and displays them as accordion items -->
+            <!-- Iterates through all active goals and displays them as accordion items -->
             <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${activeGoals}">
                 <div class="accordion-header">
                     <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
@@ -68,7 +73,7 @@
                 <div th:id="'collapse' + ${iterStat.index}" class="collapse">
                     <div class="accordion-body">
 
-                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
+                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center m-4"></p></i>
 
                         <div class="row goal-dates">
                             <div class="col-4">
@@ -106,7 +111,7 @@
                                             </form>
 
                                             <!-- Delete milestone -->
-                                            <a th:href="@{/deletemilestone/{id}(id=${milestone.id})}" class="btn btn-sm btn-danger">Delete</a>
+                                            <a th:href="@{/deletemilestone/{id}(id=${milestone.id})}" class="btn btn-sm btn-danger" onclick="return deleteMilestoneConfirmation()">Delete</a>
                                         </div>
 
                                     </div>
@@ -115,10 +120,12 @@
                         </ul>
                         <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
 
+                        <!-- Delete and edit buttons for the goal -->
                         <div class="button-row my-4">
-                                <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger">Delete goal</a>
-                                <a th:href="@{/editgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-success">Edit goal</a>
+                            <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger" onclick="return deleteGoalConfirmation()">Delete goal</a>
+                            <a th:href="@{/editgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-success">Edit goal</a>
                         </div>
+
                         <div th:if="${goal.progress == 100}" class="text-center mb-4">
                             <p>Wow! You completed all the milestones. Is the goal complete?</p>
                             <form th:action="@{/goals/{id}/complete(id=${goal.goalId})}" method="post">
@@ -132,6 +139,7 @@
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 
 </html>

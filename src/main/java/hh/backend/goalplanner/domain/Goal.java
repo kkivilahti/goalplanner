@@ -14,6 +14,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
@@ -50,12 +52,18 @@ public class Goal {
     @Valid
     private List<Milestone> milestones = new ArrayList<>();
 
-    public Goal(String title, String description, LocalDate startDate, LocalDate deadline, Status status) {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties("goals")
+    private AppUser user;
+
+    public Goal(String title, String description, LocalDate startDate, LocalDate deadline, Status status, AppUser user) {
         this.title = title;
         this.description = description;
         this.startDate = startDate;
         this.deadline = deadline;
         this.status = status;
+        this.user = user;
     }
 
     public Goal() {}
@@ -122,6 +130,14 @@ public class Goal {
 
     public void setCompletionDate(LocalDate completionDate) {
         this.completionDate = completionDate;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
     // Count days left to display on website

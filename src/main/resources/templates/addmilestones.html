@@ -33,11 +33,16 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/addgoal">Add goal</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" href="/userlist">Manage users</a>
+                        </li>
                     </ul>
     
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sign in (coming later)</a>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                            </form>
                         </li>
                     </ul>
                 </div>

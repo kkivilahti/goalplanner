@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import hh.backend.goalplanner.domain.AppUser;
+import hh.backend.goalplanner.domain.AppUserRepository;
 import hh.backend.goalplanner.domain.Goal;
 import hh.backend.goalplanner.domain.GoalRepository;
 import hh.backend.goalplanner.domain.Milestone;
@@ -28,24 +31,38 @@ public class GoalController {
     @Autowired
     private MilestoneRepository mrepository;
 
-    // Show active (status=pending) goals on the page
+    @Autowired
+    private AppUserRepository urepository;
+
+    private AppUser getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return urepository.findByUsername(username);
+    }
+
+    // Show users' active (status=pending) goals on the page
     @GetMapping("/goals")
     public String showActiveGoals(Model model) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        AppUser user = urepository.findByUsername(username);
+
         LocalDate currentDate = LocalDate.now();
-        model.addAttribute("activeGoals", grepository.findByStatusAndDeadlineAfter(Status.PENDING, currentDate));
+
+        model.addAttribute("activeGoals", grepository.findByUserAndStatusAndDeadlineAfter(user, Status.PENDING, currentDate));
         return "goals";
     }
 
-    // Show past goals: goals that have been marked as complete, or have deadline in the past
+    // Show users' past goals: goals that have been marked as complete, or have deadline in the past
     @GetMapping("/pastgoals")
     public String showPastGoals(Model model) {
+        AppUser user = getCurrentUser();
         LocalDate currentDate = LocalDate.now();
-        model.addAttribute("pastGoals", grepository.findByStatusOrDeadlineBefore(Status.COMPLETE, currentDate));
+
+        model.addAttribute("pastGoals", grepository.findByUserAndStatusOrDeadlineBefore(user, Status.COMPLETE, currentDate));
         return "pastgoals";
     }
 
     // Create a form to add a new goal
-    // Create a goal object with status=pending. Other information comes from user input
+    // Create a new goal object with status=pending. Other information comes from user input
     @GetMapping("/addgoal")
     public String addGoal(Model model) {
         Goal goal = new Goal();
@@ -54,7 +71,7 @@ public class GoalController {
         return "addgoal";
     }
 
-    // Check if goal is valid, and save the goal
+    // Check if goal is valid, link goal to the right user and save it
     // Then redirect to /addmilestone/{id} to add milestones related to the goal
     @PostMapping("/savegoal")
     public String saveGoal(@Valid @ModelAttribute Goal goal, BindingResult result) {
@@ -62,19 +79,21 @@ public class GoalController {
             // In case of validation errors, return to the form and show the error messages
             return "addgoal";
         } else {
+            AppUser user = getCurrentUser();
+            goal.setUser(user);
             grepository.save(goal);
             return "redirect:/addmilestone/" + goal.getGoalId();
         }
     }
 
-    // Deleting active goal redirects to goals-page
+    // Deleting active goal redirects to /goals
     @GetMapping("/deletegoal/{id}")
     public String deleteActiveGoal(@PathVariable("id") Long goalId, Model model) {
         grepository.deleteById(goalId);
         return "redirect:/goals";
     }
 
-    // Deleting past goal redirects to pastgoals-page
+    // Deleting past goal redirects to /pastgoals
     @GetMapping("/deletepastgoal/{id}")
     public String deletePastGoal(@PathVariable("id") Long goalId, Model model) {
         grepository.deleteById(goalId);
@@ -98,6 +117,9 @@ public class GoalController {
             return "editgoal";
         }
 
+        // Make sure that goal is linked to user
+        AppUser user = getCurrentUser();
+        goal.setUser(user);
         grepository.save(goal);
 
         for (Milestone milestone : goal.getMilestones()) {

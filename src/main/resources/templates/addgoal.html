@@ -33,11 +33,16 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="/addgoal">Add goal</a>
                         </li>
+                        <li class="nav-item" sec:authorize="hasAuthority('ADMIN')">
+                            <a class="nav-link" href="/userlist">Manage users</a>
+                        </li>
                     </ul>
     
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Sign in (coming later)</a>
+                            <form th:action="@{/logout}" method="post">
+                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                            </form>
                         </li>
                     </ul>
                 </div>
@@ -65,7 +70,7 @@
             <input type="date" class="form-control" id="dl" th:field="*{deadline}" />
             <p th:if="${#fields.hasErrors('deadline')}" th:classappend="error" th:errors="*{deadline}"></p>
 
-            <input type="hidden" th:field="*{status}" />
+            <input type="hidden" th:field="*{status}" th:value="${goal.status}" />
 
             <div class="text-center my-4">
                 <button type="submit" class="btn btn-primary">Next</button>
