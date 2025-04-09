@@ -28,6 +28,7 @@ public class MilestoneController {
     @Autowired
     private GoalRepository grepository;
 
+    // Create a form page to add new milestones
     // Link new milestones to the right goal with goalId
     @GetMapping("/addmilestone/{goalId}")
     public String addMilestone(@PathVariable Long goalId, Model model) {
@@ -48,7 +49,7 @@ public class MilestoneController {
         return "addmilestones";
     }
 
-    // Save new milestone and link it to the right goal
+    // Save milestone and link it to the right goal
     @PostMapping("/savemilestone")
     public String saveMilestone(@ModelAttribute @Valid Milestone milestone, BindingResult result, @RequestParam Long goalId, Model model) {
         Optional<Goal> goal = grepository.findById(goalId);
@@ -67,12 +68,14 @@ public class MilestoneController {
         return "redirect:/addmilestone/" + goalId;
     }
 
+    // Delete milestone in 'Active goals' page
     @GetMapping("/deletemilestone/{id}")
     public String deleteMilestone(@PathVariable("id") Long id, Model model) {
         mrepository.deleteById(id);
         return "redirect:/goals";
     }
 
+    // Delete milestone in add form
     @GetMapping("/deletemilestone/{id}/fromgoal/{goalId}")
     public String deleteMilestoneInAddForm(@PathVariable("id") Long id, @PathVariable("goalId") Long goalId, Model model) {
         mrepository.deleteById(id);

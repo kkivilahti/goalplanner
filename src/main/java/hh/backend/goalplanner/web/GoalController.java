@@ -42,9 +42,7 @@ public class GoalController {
     // Show users' active (status=pending) goals on the page
     @GetMapping("/goals")
     public String showActiveGoals(Model model) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        AppUser user = urepository.findByUsername(username);
-
+        AppUser user = getCurrentUser();
         LocalDate currentDate = LocalDate.now();
 
         model.addAttribute("activeGoals", grepository.findByUserAndStatusAndDeadlineAfter(user, Status.PENDING, currentDate));
@@ -62,17 +60,16 @@ public class GoalController {
     }
 
     // Create a form to add a new goal
-    // Create a new goal object with status=pending. Other information comes from user input
     @GetMapping("/addgoal")
     public String addGoal(Model model) {
         Goal goal = new Goal();
-        goal.setStatus(Status.PENDING);
+        goal.setStatus(Status.PENDING); // Status is 'pending' by default
         model.addAttribute("goal", goal);
         return "addgoal";
     }
 
     // Check if goal is valid, link goal to the right user and save it
-    // Then redirect to /addmilestone/{id} to add milestones related to the goal
+    // Then redirect to /addmilestone/{goalid} to add milestones related to the goal
     @PostMapping("/savegoal")
     public String saveGoal(@Valid @ModelAttribute Goal goal, BindingResult result) {
         if (result.hasErrors()) {
@@ -113,6 +110,7 @@ public class GoalController {
     @PostMapping("/savegoaledit")
     public String saveEditedGoal(@Valid @ModelAttribute Goal goal, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            // In case of validation errors, return to the form and show the error messages
             model.addAttribute("goal", goal);
             return "editgoal";
         }
