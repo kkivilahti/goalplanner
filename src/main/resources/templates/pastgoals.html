@@ -25,7 +25,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="/home">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/goals">Active goals</a>
@@ -57,33 +57,32 @@
     <div class="container-fluid">
         <p class="d-flex mx-auto info-text">
             This page contains goals that have already been completed or are past their deadline.
-            You can review your progress, reflect on your achievements, and see which goals were not completed on time.
+            You can review your progress, reflect on your achievements, and see which goals were completed on time.
         </p>
         <p th:if="${pastGoals != null && pastGoals.size() == 0}" class="form-text">
             Fill this page up by completing goals!
         </p>
     </div>
 
-    <!-- Show goals that have been completed or have deadline in the past -->
-    <div class="container-fluid">
+    <!-- Show goals that have been completed or have deadline in the past as accordion items -->
+    <div class="container-fluid my-5">
         <div class="accordion rounded-3" id="goalAccordion">
-
-            <!-- Iterates through all past goals and displays them as accordion items -->
-            <div class="accordion-item rounded-3 my-4" th:each="goal, iterStat : ${pastGoals}">
+    
+            <div class="accordion-item rounded-3 shadow-sm my-4" th:each="goal, iterStat : ${pastGoals}">
                 <div class="accordion-header">
-                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse"
-                        th:data-bs-target="'#collapse' + ${iterStat.index}"
-                        th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
-                        <h5 th:text="${goal.title}"></h5>
+                    <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
+                        <h5 class="m-1" th:text="${goal.title}"></h5>
                     </button>
                 </div>
-
-                <div th:id="'collapse' + ${iterStat.index}" class="collapse">
+    
+                <div th:id="'collapse' + ${iterStat.index}" class="accordion-collapse collapse">
                     <div class="accordion-body">
-
-                        <i><p th:text="'Description: ' + ${goal.description}" class="text-center my-4"></p></i>
-
-                        <div class="row goal-dates">
+    
+                        <!-- Goal description -->
+                        <i><p class="text-center m-4" th:text="${goal.description}"></p></i>
+    
+                        <!-- Goal dates -->
+                        <div class="row goal-dates mx-auto mt-4 mb-2 text-center">
                             <div class="col-4">
                                 <p th:text="'Started: ' + ${#temporals.format(goal.startDate, 'dd/MM/yyyy')}"></p>
                             </div>
@@ -91,34 +90,40 @@
                                 <p th:text="'Deadline: ' + ${#temporals.format(goal.deadline, 'dd/MM/yyyy')}"></p>
                             </div>
                             <div class="col-4" th:if="${goal.completionDate != null}">
-                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}">
-                                </p>
+                                <p th:text="'Completed at: ' + ${#temporals.format(goal.completionDate, 'dd/MM/yyyy')}"></p>
                             </div>
                         </div>
-
-                        <!-- Show milestones -->
+    
+                        <!-- Milestones -->
                         <ul class="list-group mb-4">
                             <li class="list-group-item" th:each="milestone : ${goal.milestones}">
                                 <div class="container">
-                                    <div class="row my-2 d-flex align-items-center">
-
+                                    <div class="row d-flex align-items-center">
+    
+                                        <!-- Status indicator -->
                                         <div class="col-1">
-                                            <!-- Status indicator -->
                                             <span class="status-badge" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'complete' : 'pending'" alt="status-indicator">
                                                 <i class="bi" th:classappend="${milestone.status.name() == 'COMPLETE'} ? 'bi-check2' : 'bi-arrow-repeat'"></i>
                                             </span>
                                         </div>
-
+    
                                         <div class="col-8">
                                             <div th:text="${milestone.title}"></div>
                                         </div>
-
+    
                                     </div>
                                 </div>
                             </li>
                         </ul>
-                        <p th:text="'Progress: ' + ${goal.progress} + '%'" class="text-end me-5"></p>
-
+                        <!-- Progress bar -->
+                        <div class="container my-4" th:if="${goal.progress > 0}">
+                            <p class="text-center">Progress</p>
+                            <div class="progress mx-3">
+                                <div class="progress-bar bg-success" role="progressbar" th:style="'width: ' + ${goal.progress} + '%'" th:text="${goal.progress + '%'}"></div>
+                            </div>
+                        </div>
+    
+                        <!-- Delete goal button -->
                         <div class="button-row my-4">
                             <a th:href="@{/deletepastgoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-danger" onclick="return deleteGoalConfirmation()">Delete goal</a>
                         </div>

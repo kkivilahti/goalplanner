@@ -1,17 +1,23 @@
 body {
-    background: linear-gradient(180deg, #fff0f0 0%, #cfabb5 100%);
+    background: linear-gradient(180deg, #fdf3f3 0%, #d3b7bf 100%);
     background-attachment: fixed;
 }
 
 h1 {
     text-align: center;
     margin: 2.5rem 0;
-    font-size: 50px;
+    font-size: 45px;
     color: #272727;
 }
 
 .navbar-nav .nav-item.active {
     font-weight: 500;
+}
+
+.home-icon {
+    font-size: 25px;
+    margin: 20px;
+    margin-left: 10px;
 }
 
 .accordion {
@@ -24,11 +30,14 @@ h1 {
 
 .list-group-item {
     border: 1px solid #c9b0b8;
+    font-size: 14px;
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
 .list-group {
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: 35px;
+    margin-right: 35px;
 }
 
 .goal-dates {
@@ -36,30 +45,23 @@ h1 {
     text-align: center;
 }
 
-th {
-    font-weight: normal;
-}
-
-table {
-    width: 100%;
-    max-width: 400px;
-}
-
 .status-badge {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 26px;
-    height: 26px;
-    font-size: 15px;
+    width: 25px;
+    height: 25px;
+    font-size: 14px;
     border-radius: 20px;
 }
+
 .complete {
-    background-color: rgb(24, 132, 24);
+    background-color: #218f42;
     color: white;
 }
+
 .pending {
-    background-color: rgb(110, 110, 110);
+    background-color: #848a8f;
     color: white;
 }
 
@@ -67,7 +69,20 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.text-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+}
+
+.progress {
+    height: 20px;
+    background-color: #b4b7b9;
 }
 
 .form-label {
@@ -80,6 +95,18 @@ table {
     color: #272727;
     font-size: 18px;
     text-align: center;
+}
+
+.form-control:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+    color: #212529 !important;
+}
+
+.form-control:-webkit-autofill:focus {
+    box-shadow: 0 0 0px 1000px #fff inset, 0 0 0 0.1rem #a37383b9;
+    border-color: #dfb8c5;
+    color: #212529;
 }
 
 .info-text {
@@ -114,15 +141,7 @@ table {
     color: #207532;
 }
 
-.user-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 50px;
-}
-
-.user-container .card .list-group {
+.card .list-group {
     width: 100%;
     margin: 0;
 }

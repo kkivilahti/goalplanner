@@ -25,7 +25,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
+                            <a class="nav-link" href="/home">Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/goals">Active goals</a>
@@ -55,20 +55,34 @@
 
     <h1>Manage users</h1>
 
-    <div class="container-fluid user-container">
-        <div class="card mb-4" style="width: 18rem;" th:each="user : ${users}">
-            <div class="card-header">
-                <h5 th:text="${user.username}"class="my-1"></h5>
+    <div class="container-fluid d-flex justify-content-center align-items-center my-5" style="min-height: 100vh;">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-4 justify-content-center">
+            <div class="col" th:each="user : ${users}">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h5 th:text="${user.username}" class="text-center my-1"></h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>ID:</span><span th:text="${user.userId}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Role:</span><span th:text="${user.role}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Created at:</span><span th:text="${#temporals.format(user.createdAt, 'dd/MM/yyyy')}"></span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <span>Goals created:</span><span th:text="${user.goals.size()}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer text-center">
+                        <a th:href="@{/users/delete/{id}(id=${user.userId})}" class="btn btn-primary btn-sm text-nowrap" onclick="return deleteUserConfirmation()">Delete user</a>
+                    </div>
+                </div>
             </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item" th:text="'ID: ' + ${user.userId}"></li>
-                <li class="list-group-item" th:text="'Role: ' + ${user.role}"></li>
-                <li class="list-group-item" th:text="'Created at: ' + ${#temporals.format(user.createdAt, 'dd/MM/yyyy')}"></li>
-                <li class="list-group-item" th:text="'Goals created: ' + ${user.goals.size()}"></li>
-                <li class="list-group-item text-center">
-                    <a th:href="@{/users/delete/{id}(id=${user.userId})}" class="btn btn-sm btn-primary" onclick="return deleteUserConfirmation()">Delete user</a>
-                </li>
-            </ul>
         </div>
     </div>
 

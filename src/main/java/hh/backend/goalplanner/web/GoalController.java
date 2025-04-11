@@ -41,6 +41,11 @@ public class GoalController {
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
+    @GetMapping("/home")
+    public String createHomePage() {
+        return "home";
+    }
+
     // Show users' active (status=pending) goals on the page
     @GetMapping("/goals")
     public String showActiveGoals(Model model) {
