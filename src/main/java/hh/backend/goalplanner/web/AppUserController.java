@@ -55,8 +55,8 @@ public class AppUserController {
                 newUser.setRole("USER");
                 newUser.setCreatedAt(LocalDate.now());
 
-                // Check if username already exists
-                if (repository.findByUsername(signUpForm.getUsername()) == null) {
+                // Check if username exists
+                if (!repository.findByUsername(signUpForm.getUsername()).isPresent()) {
                     repository.save(newUser);
                 } else {
                     result.rejectValue("username", "err.username", "Username already exists");
