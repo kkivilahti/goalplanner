@@ -148,6 +148,7 @@ h1 {
 
 .card {
     border: 1px solid #c9b0b8;
+    min-width: 300px;
 }
 
 @media screen and (min-width: 1400px) {
