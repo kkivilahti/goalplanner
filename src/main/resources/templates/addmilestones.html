@@ -59,7 +59,6 @@
             <label for="milestone" class="form-label">Milestone title</label>
             <input type="text" class="form-control" name="title" th:field="*{title}" placeholder="Title" />
             
-            <!-- Error message display for the title field -->
             <p th:if="${#fields.hasErrors('title')}" th:classappend="error" th:errors="*{title}"></p>
             
             <div class="text-center my-4">

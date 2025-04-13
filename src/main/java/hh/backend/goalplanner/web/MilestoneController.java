@@ -64,31 +64,31 @@ public class MilestoneController {
         milestone.setStatus(Status.PENDING); // Status is 'pending' by default
         mrepository.save(milestone);
 
-        // Redirect back to /addmilestones, in case user wants to add more milestones to the goal
+        // Redirect back to /addmilestone, in case user wants to add more milestones to the goal
         return "redirect:/addmilestone/" + goalId;
     }
 
-    // Delete milestone in 'Active goals' page
+    // Delete a milestone on the 'Active goals' page
     @GetMapping("/deletemilestone/{id}")
     public String deleteMilestone(@PathVariable("id") Long id, Model model) {
         mrepository.deleteById(id);
         return "redirect:/goals";
     }
 
-    // Delete milestone in add form
+    // Delete a milestone on the 'Add milestones' page
     @GetMapping("/deletemilestone/{id}/fromgoal/{goalId}")
     public String deleteMilestoneInAddForm(@PathVariable("id") Long id, @PathVariable("goalId") Long goalId, Model model) {
         mrepository.deleteById(id);
         return "redirect:/addmilestone/" + goalId;
     }
 
-    // User can mark milestones as complete
+    // Allows the user to mark milestones as complete
     // Helps with visual tracking: milestone indicators update their color based on milestone status
     @PostMapping("/milestones/{id}/complete")
     public String markAsComplete(@PathVariable("id") Long id) {
         Optional<Milestone> optmilestone = mrepository.findById(id);
 
-        // Check if milestone object exists. Then change the status and save it
+        // If the milestone exists, update the status and save it
         if (optmilestone.isPresent()) {
             Milestone milestone = optmilestone.get();
             milestone.setStatus(Status.COMPLETE);

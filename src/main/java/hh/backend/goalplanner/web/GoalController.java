@@ -46,7 +46,7 @@ public class GoalController {
         return "home";
     }
 
-    // Show users' active (status=pending) goals on the page
+    // Show the user's active goals (status = pending) on the page
     @GetMapping("/goals")
     public String showActiveGoals(Model model) {
         AppUser user = getCurrentUser();
@@ -56,7 +56,7 @@ public class GoalController {
         return "goals";
     }
 
-    // Show users' past goals: goals that have been marked as complete, or have deadline in the past
+    // Show the user's past goals: goals that have been marked as complete, or have deadline in the past
     @GetMapping("/pastgoals")
     public String showPastGoals(Model model) {
         AppUser user = getCurrentUser();
@@ -75,8 +75,8 @@ public class GoalController {
         return "addgoal";
     }
 
-    // Check if goal is valid, link goal to the right user and save it
-    // Then redirect to /addmilestone/{goalid} to add milestones related to the goal
+    // Validate the goal, link it to the current user and save it
+    // Redirect to /addmilestone/{goalid} to add milestones related to the goal
     @PostMapping("/savegoal")
     public String saveGoal(@Valid @ModelAttribute Goal goal, BindingResult result) {
         if (result.hasErrors()) {
@@ -113,7 +113,7 @@ public class GoalController {
         return "editgoal";
     }
 
-    // Save edited goal and redirect to the goal page
+    // Save tedited goal and redirect to the 'Active goals' page
     @PostMapping("/savegoaledit")
     public String saveEditedGoal(@Valid @ModelAttribute Goal goal, BindingResult result, Model model) {
         if (result.hasErrors()) {
@@ -135,13 +135,13 @@ public class GoalController {
         return "redirect:/goals";
     }
 
-    // User can mark goals as complete
+    // Allows the user to mark goals as complete
     @PostMapping("/goals/{id}/complete")
     public String markGoalAsComplete(@PathVariable("id") Long goalId) {
         Optional<Goal> optgoal = grepository.findById(goalId);
         LocalDate currentDate = LocalDate.now();
 
-        // Check if goal object exists. Then change the status and save it
+        // If the goal exists, update the status and completion date and save it
         if (optgoal.isPresent()) {
             Goal goal = optgoal.get();
             goal.setStatus(Status.COMPLETE);
