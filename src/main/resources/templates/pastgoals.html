@@ -8,14 +8,14 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet" />
 
-    <title>Goalplanner</title>
+    <title>Goalplanner - Past goals</title>
 </head>
 
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Goalplanner</a>
+                <a class="navbar-brand mb-1" href="/home">Goalplanner</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form th:action="@{/logout}" method="post">
-                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary"/>
                             </form>
                         </li>
                     </ul>
@@ -55,7 +55,7 @@
 
     <h1>Past goals</h1>
     <div class="container-fluid">
-        <p class="d-flex mx-auto info-text">
+        <p class="d-flex mx-auto info-text mb-5">
             This page contains goals that have already been completed or are past their deadline.
             You can review your progress, reflect on your achievements, and see which goals were completed on time.
         </p>
@@ -65,10 +65,10 @@
     </div>
 
     <!-- Show goals that have been completed or have deadline in the past as accordion items -->
-    <div class="container-fluid my-5">
+    <div class="container-fluid accordion-container">
         <div class="accordion rounded-3" id="goalAccordion">
     
-            <div class="accordion-item rounded-3 shadow-sm my-4" th:each="goal, iterStat : ${pastGoals}">
+            <div class="accordion-item rounded-3 shadow" th:each="goal, iterStat : ${pastGoals}">
                 <div class="accordion-header">
                     <button class="accordion-button rounded-3" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapse' + ${iterStat.index}" th:aria-controls="'collapse' + ${iterStat.index}" aria-expanded="false">
                         <h5 class="m-1" th:text="${goal.title}"></h5>
@@ -76,7 +76,7 @@
                 </div>
     
                 <div th:id="'collapse' + ${iterStat.index}" class="accordion-collapse collapse">
-                    <div class="accordion-body">
+                    <div class="accordion-body rounded-3">
     
                         <!-- Goal description -->
                         <i><p class="text-center m-4" th:text="${goal.description}"></p></i>

@@ -4801,7 +4801,7 @@ fieldset:disabled .btn {
     --bs-card-inner-border-radius: calc(0.375rem - 1px);
     --bs-card-cap-padding-y: 0.5rem;
     --bs-card-cap-padding-x: 1rem;
-    --bs-card-cap-bg: #f3e8eb;
+    --bs-card-cap-bg: #f5e7eb;
     --bs-card-cap-color: ;
     --bs-card-height: ;
     --bs-card-color: ;
@@ -4991,11 +4991,12 @@ fieldset:disabled .btn {
 
 .accordion {
     --bs-accordion-color: #212529;
+    --accordion-main-bg: #e2c4cc;
     --bs-accordion-bg: #f0dfe4;
     --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
     --bs-accordion-border-color: #bd99a4;
-    --bs-accordion-border-width: 1;
-    --bs-accordion-border-radius: 0.375rem;
+    --bs-accordion-border-width: 0;
+    --bs-accordion-border-radius: 0;
     --bs-accordion-inner-border-radius: calc(0.375rem - 1px);
     --bs-accordion-btn-padding-x: 1.25rem;
     --bs-accordion-btn-padding-y: 1rem;
@@ -5006,12 +5007,12 @@ fieldset:disabled .btn {
     --bs-accordion-btn-icon-transform: rotate(-180deg);
     --bs-accordion-btn-icon-transition: transform 0.2s ease-in-out;
     --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-    --bs-accordion-btn-focus-border-color: #b1909b;
-    --bs-accordion-btn-focus-box-shadow: 0 0 0 0.2rem #e4c1ccb9;
+    --bs-accordion-btn-focus-border-color: #be93a3;
+    --bs-accordion-btn-focus-box-shadow: 0;
     --bs-accordion-body-padding-x: 1.25rem;
     --bs-accordion-body-padding-y: 1rem;
     --bs-accordion-active-color: #222222;
-    --bs-accordion-active-bg: #c2a2ac;
+    --bs-accordion-active-bg: var(--accordion-main-bg);
 }
 
 .accordion-button {
@@ -5023,8 +5024,8 @@ fieldset:disabled .btn {
     font-size: 1rem;
     color: #2d2d2d;
     text-align: left;
-    background-color: #c2a2ac;
-    border: 1px solid #a3838e;
+    background-color: var(--accordion-main-bg);
+    border: 1px solid #cfabb4;
     border-radius: 30px;
     overflow-anchor: none;
     transition: var(--bs-accordion-transition)
@@ -5434,7 +5435,7 @@ fieldset:disabled .btn {
 .progress {
     --bs-progress-height: 1rem;
     --bs-progress-font-size: 0.75rem;
-    --bs-progress-bg: #e9ecef;
+    --bs-progress-bg: #edf1f3;
     --bs-progress-border-radius: 0.375rem;
     --bs-progress-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
     --bs-progress-bar-color: #fff;

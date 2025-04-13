@@ -8,14 +8,14 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet" />
 
-    <title>Goalplanner</title>
+    <title>Goalplanner - Home</title>
 </head>
 
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Goalplanner</a>
+                <a class="navbar-brand mb-1" href="/home">Goalplanner</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,7 +44,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form th:action="@{/logout}" method="post">
-                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary" />
+                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary" />
                             </form>
                         </li>
                     </ul>
@@ -59,9 +59,9 @@
             <h3 class="text-center my-5">
                 <i>Small steps - big achievements</i>
             </h3>
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100">
+            <div class="row card-row g-4">
+                <div class="col-12 col-md-6">
+                    <div class="card home-card shadow-sm border-0 h-100">
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-flag-fill text-primary home-icon"></i>
                             <div>
@@ -72,8 +72,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100">
+                <div class="col-12 col-md-6">
+                    <div class="card home-card shadow-sm border-0 h-100">
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-diagram-3-fill text-warning home-icon"></i>
                             <div>
@@ -84,8 +84,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100">
+                <div class="col-12 col-md-6">
+                    <div class="card home-card shadow-sm border-0 h-100">
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-check2-circle text-success home-icon"></i>
                             <div>
@@ -96,8 +96,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 col-lg-3">
-                    <div class="card shadow-sm border-0 h-100">
+                <div class="col-12 col-md-6">
+                    <div class="card home-card shadow-sm border-0 h-100">
                         <div class="card-body d-flex align-items-center">
                             <i class="bi bi-bar-chart-line-fill text-info home-icon"></i>
                             <div>

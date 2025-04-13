@@ -1,5 +1,5 @@
 body {
-    background: linear-gradient(180deg, #fdf3f3 0%, #d3b7bf 100%);
+    background: linear-gradient(180deg, #fdf3f5 0%, #dbb3be 100%);
     background-attachment: fixed;
 }
 
@@ -14,23 +14,90 @@ h1 {
     font-weight: 500;
 }
 
+.info-text {
+    font-size: 14px;
+    max-width: 50%;
+    text-align: center;
+}
+
+/* Cards in home page */
 .home-icon {
     font-size: 25px;
     margin: 20px;
     margin-left: 10px;
 }
 
+.home-card {
+    font-size: 17px;
+    background-color: #fff9fb;
+}
+
+h6 {
+    font-size: 17px;
+}
+
+.card-row {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+/* Accordion and goal display settings */
 .accordion {
     margin: auto;
 }
 
-.accordion-item {
-    border: 1px solid #c9b0b8;
+.accordion-container {
+    margin-bottom: 70px;
 }
 
+.accordion-button {
+    padding: 22px;
+}
+
+.accordion-button:hover {
+    background-color: #e9cfd6;
+    border: 1px solid #d6b9c2;
+}
+
+h5 {
+    font-size: 22px;
+}
+
+.accordion-item {
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.accordion-body {
+    background-color: #f5e5e9;
+    border: 1px solid #e6d0d6;
+}
+
+.goal-dates {
+    font-size: 13px;
+    text-align: center;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+}
+
+.progress {
+    height: 20px;
+    background-color: #b4b7b9;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+/* Milestone display */
 .list-group-item {
-    border: 1px solid #c9b0b8;
-    font-size: 14px;
+    border: 1px solid #e0cbd1;
+    font-size: 15px;
     padding-top: 12px;
     padding-bottom: 12px;
 }
@@ -40,9 +107,10 @@ h1 {
     margin-right: 35px;
 }
 
-.goal-dates {
-    font-size: 13px;
-    text-align: center;
+.text-wrap {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .status-badge {
@@ -65,26 +133,7 @@ h1 {
     color: white;
 }
 
-.button-row {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-top: 35px;
-    margin-bottom: 35px;
-}
-
-.text-wrap {
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    white-space: normal;
-}
-
-.progress {
-    height: 20px;
-    background-color: #b4b7b9;
-}
-
+/* Form settings */
 .form-label {
     margin-bottom: 2px;
     margin-top: 8px;
@@ -100,21 +149,16 @@ h1 {
 .form-control:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px #fff inset;
     transition: background-color 5000s ease-in-out 0s;
-    color: #212529 !important;
+    color: #232527;
 }
 
 .form-control:-webkit-autofill:focus {
     box-shadow: 0 0 0px 1000px #fff inset, 0 0 0 0.1rem #a37383b9;
     border-color: #dfb8c5;
-    color: #212529;
+    color: #232527;
 }
 
-.info-text {
-    font-size: 14px;
-    max-width: 50%;
-    text-align: center;
-}
-
+/* Validation error messages in forms */
 .error {
     margin-top: 5px;
     margin-bottom: 5px;
@@ -123,6 +167,7 @@ h1 {
     color: #9c2e51;
 }
 
+/* Login form messages */
 .login-error {
     text-align: center;
     margin-top: 5px;
@@ -141,40 +186,89 @@ h1 {
     color: #207532;
 }
 
+/* Cards in user management page */
 .card .list-group {
     width: 100%;
     margin: 0;
 }
 
+.card-header {
+    border-bottom: 1px solid #dbc5ca;
+}
+
+.card-footer {
+    border-top: 1px solid #dbc5ca;
+}
+
 .card {
-    border: 1px solid #c9b0b8;
+    border: 1px solid #dbc5ca;
     min-width: 300px;
 }
 
 @media screen and (min-width: 1400px) {
     .accordion {
+        width: 45%;
+    }
+
+    .home-card, h6 {
+        font-size: 19px;
+    }
+
+    .milestone-container {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+    .accordion {
+        width: 50%;
+    }
+
+    .milestone-container {
         width: 50%;
     }
 }
 
-@media screen and (max-width: 1400px) {
+@media screen and (max-width: 1200px) {
     .accordion {
+        width: 60%;
+    }
+
+    .card-row {
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .milestone-container {
         width: 60%;
     }
 }
 
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 992px) {
     .accordion {
-        width: 80%;
+        width: 70%;
     }
 
     .info-text {
         max-width: 70%;
     }
+
+    .card-row {
+        margin-left: 3%;
+        margin-right: 3%;
+    }
+
+    .milestone-container {
+        width: 80%;
+    }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 35px;
+    }
+
     .accordion {
         width: 100%;
     }
@@ -184,7 +278,29 @@ h1 {
         margin-right: 5px;
     }
 
+    .list-group-item {
+        font-size: 13px;
+    }
+
+    .progress {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+
     .info-text {
         max-width: 90%;
+    }
+
+    .card-row {
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .milestone-container {
+        width: 100%;
+    }
+
+    .signout-btn {
+        margin-top: 8px;
     }
 }

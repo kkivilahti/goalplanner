@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet" />
-    <title>Goalplanner</title>
+    <title>Goalplanner - Add goal</title>
 </head>
 
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Goalplanner</a>
+                <a class="navbar-brand mb-1" href="/home">Goalplanner</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form th:action="@{/logout}" method="post">
-                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary"/>
                             </form>
                         </li>
                     </ul>
@@ -50,7 +50,7 @@
         </nav>
     </div>
 
-    <h1>Add new goal</h1>
+    <h1>Add goal</h1>
 
     <div class="container" style="max-width: 400px;">
         <form th:action="@{/savegoal}" method="post" th:object="${goal}">

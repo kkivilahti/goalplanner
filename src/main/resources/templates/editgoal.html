@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/custom.css" rel="stylesheet" />
-    <title>Goalplanner</title>
+    <title>Goalplanner - Edit goal</title>
 </head>
 
 <body>
     <div class="container-fluid">
         <nav class="navbar navbar-expand-md">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">Goalplanner</a>
+                <a class="navbar-brand mb-1" href="/home">Goalplanner</a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -41,7 +41,7 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form th:action="@{/logout}" method="post">
-                                <input type="submit" value="Sign Out" class="btn btn-sm btn-primary"/>
+                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary"/>
                             </form>
                         </li>
                     </ul>
@@ -73,23 +73,15 @@
 
             <input type="hidden" th:field="*{status}" th:value="${goal.status}" />
 
-            <table class="my-2">
-                <thead>
-                    <tr>
-                        <th>Milestones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="milestone, iterStat : *{milestones}">
-                        <input type="hidden" th:field="*{milestones[__${iterStat.index}__].id}" />
-                        <input type="hidden" th:field="*{milestones[__${iterStat.index}__].status}" />
-                        <td>
-                            <input class="form-control mb-1" th:field="*{milestones[__${iterStat.index}__].title}" />
-                            <p th:if="${#fields.hasErrors('milestones[' + iterStat.index + '].title')}" th:errors="*{milestones[__${iterStat.index}__].title}" th:classappend="error" ></p>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="my-2">
+                <label class="form-label">Milestones</label>
+                <div th:each="milestone, iterStat : *{milestones}" class="mb-2">
+                    <input type="hidden" th:field="*{milestones[__${iterStat.index}__].id}" />
+                    <input type="hidden" th:field="*{milestones[__${iterStat.index}__].status}" />
+                    <input class="form-control mb-1" th:field="*{milestones[__${iterStat.index}__].title}" />
+                    <p th:if="${#fields.hasErrors('milestones[' + iterStat.index + '].title')}" th:errors="*{milestones[__${iterStat.index}__].title}" th:classappend="error"></p>
+                </div>
+            </div>
 
             <div class="text-center my-4">
                 <button type="submit" class="btn btn-primary mb-5">Save changes</button>
