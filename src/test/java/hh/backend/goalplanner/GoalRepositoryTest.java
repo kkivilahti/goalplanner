@@ -76,7 +76,7 @@ public class GoalRepositoryTest {
     public void findByUserAndStatusAndDeadlineAfter_shouldReturnPendingGoal() {
         LocalDate currentDate = LocalDate.now();
 
-        List<Goal> pendingGoals = grepository.findByUserAndStatusAndDeadlineAfter(user, Status.PENDING, currentDate);
+        List<Goal> pendingGoals = grepository.findByUserAndStatusAndDeadlineGreaterThanEqual(user, Status.PENDING, currentDate);
         assertThat(pendingGoals).hasSize(1);
 
         Goal foundGoal = pendingGoals.get(0);

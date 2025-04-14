@@ -51,7 +51,7 @@ public class GoalRestController {
     public List<Goal> activeGoalsRest() {
         AppUser user = getCurrentUser();
         LocalDate currentDate = LocalDate.now();
-        return grepository.findByUserAndStatusAndDeadlineAfter(user, Status.PENDING, currentDate);
+        return grepository.findByUserAndStatusAndDeadlineGreaterThanEqual(user, Status.PENDING, currentDate);
     }
 
     // Returns past goals for the current user as JSON

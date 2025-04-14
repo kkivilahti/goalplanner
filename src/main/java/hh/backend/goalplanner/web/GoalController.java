@@ -52,7 +52,7 @@ public class GoalController {
         AppUser user = getCurrentUser();
         LocalDate currentDate = LocalDate.now();
 
-        model.addAttribute("activeGoals", grepository.findByUserAndStatusAndDeadlineAfter(user, Status.PENDING, currentDate));
+        model.addAttribute("activeGoals", grepository.findByUserAndStatusAndDeadlineGreaterThanEqual(user, Status.PENDING, currentDate));
         return "goals";
     }
 
