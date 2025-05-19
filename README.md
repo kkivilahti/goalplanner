@@ -68,6 +68,7 @@ If you want to test the app locally, follow these steps:
 1. Clone the repository
 ``` 
 git clone https://github.com/kkivilahti/goalplanner.git
+cd goalplanner
 ```
 2. You can open the project in your IDE -
 for example, VS Code - and start the application using the Spring Boot Dashboard.
