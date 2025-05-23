@@ -52,7 +52,7 @@
 
     <h1>Add milestones</h1>
 
-    <div class="container" style="width: 400px">
+    <div class="container" style="max-width: 400px">
         <form th:action="@{/savemilestone}" method="post" th:object="${milestone}">
             <input type="hidden" name="goalId" th:value="${goal.goalId}" />
     
