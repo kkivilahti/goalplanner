@@ -52,15 +52,17 @@ public class MilestoneController {
     // Save milestone and link it to the right goal
     @PostMapping("/savemilestone")
     public String saveMilestone(@ModelAttribute @Valid Milestone milestone, BindingResult result, @RequestParam Long goalId, Model model) {
-        Optional<Goal> goal = grepository.findById(goalId);
+        Optional<Goal> optgoal = grepository.findById(goalId);
+        Goal goal = optgoal.get();
 
         if (result.hasErrors()) {
             // In case of validation errors, return to the form and show the error messages
-            model.addAttribute("goal", goal.get());
+            model.addAttribute("goal", goal);
+            model.addAttribute("milestoneEmpty", goal.getMilestones().isEmpty());
             return "addmilestones";
         }
 
-        milestone.setGoal(goal.get());
+        milestone.setGoal(goal);
         milestone.setStatus(Status.PENDING); // Status is 'pending' by default
         mrepository.save(milestone);
 
@@ -70,14 +72,14 @@ public class MilestoneController {
 
     // Delete a milestone on the 'Active goals' page
     @GetMapping("/deletemilestone/{id}")
-    public String deleteMilestone(@PathVariable("id") Long id, Model model) {
+    public String deleteMilestone(@PathVariable("id") Long id) {
         mrepository.deleteById(id);
         return "redirect:/goals";
     }
 
     // Delete a milestone on the 'Add milestones' page
     @GetMapping("/deletemilestone/{id}/fromgoal/{goalId}")
-    public String deleteMilestoneInAddForm(@PathVariable("id") Long id, @PathVariable("goalId") Long goalId, Model model) {
+    public String deleteMilestoneInAddForm(@PathVariable("id") Long id, @PathVariable("goalId") Long goalId) {
         mrepository.deleteById(id);
         return "redirect:/addmilestone/" + goalId;
     }

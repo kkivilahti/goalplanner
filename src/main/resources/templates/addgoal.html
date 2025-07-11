@@ -62,18 +62,19 @@
             <input type="text" class="form-control" id="desc" th:field="*{description}" />
             <p th:if="${#fields.hasErrors('description')}" th:classappend="error" th:errors="*{description}"></p>
 
-            <label for="sdate" class="form-label">Start Date</label>
-            <input type="date" class="form-control" id="sdate" th:field="*{startDate}" />
+            <label for="startdate" class="form-label">Start Date</label>
+            <input type="date" class="form-control" id="startdate" th:field="*{startDate}" />
             <p th:if="${#fields.hasErrors('startDate')}" th:classappend="error" th:errors="*{startDate}"></p>
 
-            <label for="dl" class="form-label">Deadline</label>
-            <input type="date" class="form-control" id="dl" th:field="*{deadline}" />
+            <label for="deadline" class="form-label">Deadline</label>
+            <input type="date" class="form-control" id="deadline" th:field="*{deadline}" />
             <p th:if="${#fields.hasErrors('deadline')}" th:classappend="error" th:errors="*{deadline}"></p>
 
             <input type="hidden" th:field="*{status}" th:value="${goal.status}" />
 
             <div class="text-center my-4">
-                <button type="submit" class="btn btn-primary">Next</button>
+                <a href="/goals" class="btn btn-secondary px-3">Cancel</a>
+                <button type="submit" class="btn btn-primary px-3">Next</button>
             </div>
         </form>
         <p class="form-text mb-5">On the next page, you can add milestones to your goal.</p>

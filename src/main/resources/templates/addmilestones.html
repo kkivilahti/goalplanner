@@ -15,10 +15,11 @@
             <div class="container-fluid">
                 <a class="navbar-brand mb-1" href="/home">Goalplanner</a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-    
+
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
@@ -37,11 +38,11 @@
                             <a class="nav-link" href="/userlist">Manage users</a>
                         </li>
                     </ul>
-    
+
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <form th:action="@{/logout}" method="post">
-                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary"/>
+                                <input type="submit" value="Sign Out" class="btn btn-sm signout-btn btn-primary" />
                             </form>
                         </li>
                     </ul>
@@ -53,16 +54,21 @@
     <h1>Add milestones</h1>
 
     <div class="container" style="max-width: 400px">
+        <div class="d-flex align-items-center justify-content-center gap-2 mb-3">
+            <p class="mb-0">Add at least one milestone to continue.</p>
+            <a th:href="@{/deletegoal/{id}(id=${goal.goalId})}" class="btn btn-sm btn-secondary px-3" onclick="return cancelConfirmation()">Cancel</a>
+        </div>
+
         <form th:action="@{/savemilestone}" method="post" th:object="${milestone}">
             <input type="hidden" name="goalId" th:value="${goal.goalId}" />
-    
-            <label for="milestone" class="form-label">Milestone title</label>
+
+            <label for="title" class="form-label">Milestone title</label>
             <input type="text" class="form-control" name="title" th:field="*{title}" placeholder="Title" />
-            
+
             <p th:if="${#fields.hasErrors('title')}" th:classappend="error" th:errors="*{title}"></p>
-            
-            <div class="text-center my-4">
-                <button type="submit" class="btn btn-primary">Add milestone</button>
+
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-primary px-3">Add milestone</button>
             </div>
         </form>
     </div>
@@ -75,21 +81,21 @@
                     <div class="row d-flex align-items-center">
                         <div class="col-8" th:text="${iterStat.index+1} + '. ' + ${milestone.title}"></div>
                         <div class="col-4 text-end">
-                            <a th:href="@{/deletemilestone/{id}/fromgoal/{goalId} (id=${milestone.id}, goalId=${goal.goalId})}" class="btn btn-sm btn-primary">Remove</a>
+                            <a th:href="@{/deletemilestone/{id}/fromgoal/{goalId} (id=${milestone.id}, goalId=${goal.goalId})}" class="btn btn-sm btn-secondary px-3" onclick="return deleteMilestoneConfirmation()">Remove</a>
                         </div>
                     </div>
                 </div>
             </li>
         </ul>
 
-        <div th:if="${milestoneEmpty != null and !milestoneEmpty}" class="text-center my-5">
-            <p class="form-text mb-3">After adding all milestones you want, click here:</p>
-            <a th:href="@{/goals}" class="btn btn-primary">Done</a>
+        <div th:if="${milestoneEmpty != null and !milestoneEmpty}" class="d-flex align-items-center justify-content-center gap-2 my-5">
+            <p class="form-text mb-1">Done adding milestones?</p>
+            <a th:href="@{/goals}" class="btn btn-sm btn-primary px-3">Finish</a>
         </div>
-
     </div>
 
     <script src="/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/custom.js"></script>
 </body>
 
 </html>

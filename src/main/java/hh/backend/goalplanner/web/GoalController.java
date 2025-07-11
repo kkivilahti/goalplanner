@@ -92,14 +92,14 @@ public class GoalController {
 
     // Deleting active goal redirects to /goals
     @GetMapping("/deletegoal/{id}")
-    public String deleteActiveGoal(@PathVariable("id") Long goalId, Model model) {
+    public String deleteActiveGoal(@PathVariable("id") Long goalId) {
         grepository.deleteById(goalId);
         return "redirect:/goals";
     }
 
     // Deleting past goal redirects to /pastgoals
     @GetMapping("/deletepastgoal/{id}")
-    public String deletePastGoal(@PathVariable("id") Long goalId, Model model) {
+    public String deletePastGoal(@PathVariable("id") Long goalId) {
         grepository.deleteById(goalId);
         return "redirect:/pastgoals";
     }
