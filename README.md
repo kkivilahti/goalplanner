@@ -1,92 +1,103 @@
 # Goalplanner
-### Final project for Backend Programming course
-
 - [Project overview](#project-overview)
+- [Technologies used](#technologies-used)
 - [Main features](#main-features)
-- [Learning points](#learning-points)
 - [UI samples](#ui-samples)
 - [Database diagrams](#database-diagrams)
-- [Testing the app](#testing-the-app)
+- [Learning points](#learning-points)
+- [Running the app](#running-the-app)
 - [Note](#note)
 
 ## Project overview
-Here is the assignment: 
-> In this exercise, you can build the first prototype of your dream application and continue developing it in the coming years.
-> 
-> Implement a Spring Boot application using the following technologies:
-> - Spring Boot Web (MVC)
-> - Thymeleaf templates (HTML5)
-> - JPA (H2 or PostgreSQL)
-> - Spring Security
-> - Spring Validation (HTML forms, @Valid)
-> - Spring REST (JSON)
->   
-> and at least two of the following:
-> - More advanced JPA handling (e.g., multiple database tables, @ManyToMany relationships, useful findBy... query methods, etc.)
-> - Testing (JUnit, etc.)
-> - I18n (e.g., multilingual user interface)
-> - Some other Spring Boot functionality not mentioned above
-> - Front-end solution using Spring REST services (React or similar)
->
-> Design a database for your application. It must include at least two related tables.
+This is my final project for Haaga-Helia’s Backend Programming course. The assignment offered plenty of freedom in choosing the topic, so I decided to build an app for planning and tracking goals. I enjoyed working on this project because it was quite different from the usual course exercises and gave me a chance to be creative with both the design and features.
 
-I implemented all the required technologies and, from the optional list, chose to include **JUnit testing** and **more advanced JPA handling**. The application uses an **H2 in-memory database**.
-
-The assignment gave us a lot of freedom in choosing the topic. I decided to build a Goalplanner application for planning and tracking goals and their milestones. I found this topic interesting because it was very different from the course exercises.
+## Technologies used
+- Spring Boot Web (MVC)
+- Thymeleaf templates (HTML5)
+- JPA with H2 in-memory database
+- Spring Security
+- Spring Validation
+- Spring REST
+- JUnit
+- Bootstrap
 
 ## Main features
-- User registration and login functionality
-- User can view, add, edit, and delete goals and milestones
-- Progress is visually tracked as user marks goals and milestones as complete
-- Goals are organized into separate views — Active Goals and Past Goals — based on their status and deadline
-- Admin user has access to user management
-  
-## Learning points
-The project was educational, rewarding, and occasionally challenging. It deepened my skills in Spring Boot, Thymeleaf, and Bootstrap, and gave me a clearer understanding of the MVC architecture. Some of the most interesting parts were implementing the user registration feature — which was completely new to me — and filtering goals using more advanced JPA query methods. I also enjoyed working on the UI design, although it still has room for improvement. One of the more challenging parts was implementing the add and edit features, as goals and milestones are linked, so I had to find a solution to handle them together within the forms.
+- User registration, login, and role-based access control
+- CRUD operations for goals and milestones
+- Visual progress tracking
+- Separate views for active and past goals
+- Admin panel for user management
 
 ## UI samples
 
-![active goals page](https://github.com/kkivilahti/goalplanner/blob/main/docs/active-goals.png)
+### Viewing active and past goals
 
-![goal example](https://github.com/kkivilahti/goalplanner/blob/main/docs/goal-example.png)
+Goals are divided into two separate pages according to their status and deadline. The *Active Goals* page displays pending goals that have a deadline set in the future, and contains most of the CRUD options. The *Past Goals* page lists completed goals and those with past deadlines, and is primarily intended for viewing.
 
-Goals are organized onto two separate pages — Active Goals and Past Goals — based on their status and deadline. Each goal is displayed in a clickable box that expands to reveal all relevant details. The box shows the goal’s title, description, and key dates, along with its associated milestones. It also includes buttons for editing, deleting, and marking milestones or the entire goal as complete.
+![active goals page](/docs/active-goals.png)
 
-Users can mark milestones as complete, and a progress bar visually tracks progress, updating automatically as each milestone is completed. Once all milestones are done, the user can mark the entire goal as complete — at which point it is moved to the *Past Goals* page:
+![goal example](/docs/goal-example.png)
 
-![past goals page](https://github.com/kkivilahti/goalplanner/blob/main/docs/complete-goal.png)
+Each goal is displayed in a clickable box that expands to reveal all relevant details. The box shows the goal’s title, description, and key dates, along with its associated milestones. It also includes buttons for editing, deleting, and marking milestones or the entire goal as complete.
 
-Here's also a sneak peek at the admin's *User management* page:
+The user can mark milestones as complete, and a progress bar visually tracks progress, updating automatically as milestones are completed. Once all milestones are done, the user can mark the entire goal as complete, moving it to the *Past Goals* page.
 
-![user management page](https://github.com/kkivilahti/goalplanner/blob/main/docs/manage-users.png)
+![past goals page](/docs/complete-goal.png)
+
+### Adding a new goal
+
+The process of adding a new goal is divided into two steps. First, the user enters the general information about the goal. When the user clicks *Next*, the goal details are saved, and the user is redirected to the next page to add milestones.
+
+![add goal page](/docs/addgoal.png)
+
+![add milestones page](/docs/addmilestones.png)
+
+At least one milestone must be added before proceeding. The user can add as many milestones as they want, and can also remove them if needed. Milestones are saved one at a time when the user clicks *Add milestone*. Once all desired milestones have been added, the user clicks *Finish* and is redirected back to the goals overview page.
+
+If the user clicks *Cancel*, all information related to the new goal is discarded and the user is redirected back to the goals overview page.
+
+### User management panel
+
+The user management panel is accessible only to the admin. It allows viewing information of all registered users and deleting accounts when necessary.
+
+![user management page](/docs/manage-users.png)
 
 ## Database diagrams
-![database diagrams](https://github.com/kkivilahti/goalplanner/blob/main/docs/diagrams.png)
+The database consists of three tables representing users, goals, and milestones, with relationships connecting goals to users and milestones to goals.
 
-## Testing the app
-If you want to test the app locally, follow these steps:
-1. Clone the repository
-``` 
-git clone https://github.com/kkivilahti/goalplanner.git
-cd goalplanner
-```
-2. You can open the project in your IDE -
-for example, VS Code - and start the application using the Spring Boot Dashboard.
-    *(Make sure you have Java and Maven installed)*
+![database diagrams](/docs/diagrams.png)
+
+## Learning points
+This project provided valuable hands-on experience in building a full-stack Spring Boot application. I learned new techniques such as implementing user registration, using more advanced JPA techniques (like custom findBy queries), and managing server-side form validation with Spring Validation.
+
+I improved my UI design skills with Thymeleaf and Bootstrap, aiming to create a user-friendly and responsive experience — though there’s still room for improvement in some areas.
+
+Additionally, this project enhanced my problem-solving skills, as some parts proved to be a bit challenging, like managing goals and milestones together within the forms, tracking goal progress, and creating an intuitive UI.
+
+## Running the app
+**Requirements**: Java 17 (or higher), Maven, and optionally an IDE like VS Code
+
+### Running the app locally
+1. Clone the repository and navigate to it
+    ```
+    git clone https://github.com/kkivilahti/goalplanner.git
+    cd goalplanner
+    ```
+2. Open the project in your IDE (e.g., VS Code) and start the app using the Spring Boot Dashboard.
    
-    Optionally, you can start the app via the terminal:
-```
-mvn spring-boot:run
-```
+    Optionally, you can start the app from the terminal:
+    ```
+    mvn spring-boot:run
+    ```
 
-3. After the app has started, it should be available at:
+3. Once the app is running, open your browser and go to:
 http://localhost:8080
 
-4. You can login with the test accounts
+4. Login using the test accounts:
    - admin / admin123
    - user / user123
      
    or create your own account
 
 ## Note
-This is an initial version of the application, built over a three-week period for a school course. While it includes many functional features, it could definitely benefit from additional UI improvements and feature enhancements.
+This app was developed primarily over a three-week period as part of a school course. It was a rewarding challenge that helped me deepen my understanding of full-stack development with Spring Boot. While the app includes many functional features, it’s still a work in progress, and I welcome any feedback or suggestions for improvement.
